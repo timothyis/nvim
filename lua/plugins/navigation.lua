@@ -1,0 +1,129 @@
+return {
+    {
+        "nvim-neo-tree/neo-tree.nvim",
+        lazy = true,
+        cmd = "Neotree",
+        branch = "v2.x",
+        opts = {
+            close_if_last_window = true, -- Close Neo-tree if it is the last window left in the tab
+            popup_border_style = "rounded",
+            enable_git_status = true,
+            enable_diagnostics = true,
+            source_selector = {
+                winbar = true,
+            },
+            filesystem = {
+                follow_current_file = true,
+                filtered_items = {
+                    hide_dotfiles = false,
+                    hide_by_name = {
+                        "node_modules"
+                    },
+                    never_show = {
+                        ".DS_Store",
+                    },
+                },
+            },
+            window = {
+                position = "float",
+                width = math.floor(vim.o.columns * 0.85),
+            },
+        },
+        keys = {
+            { "<leader>e", ":Neotree filesystem reveal float toggle<CR>", silent = true },
+            { "<leader>vg", ":Neotree git reveal float toggle<CR>", silent = true },
+        },
+    },
+
+
+
+    -- fuzzy finder
+    {
+        "nvim-telescope/telescope.nvim",
+        cmd = "Telescope",
+        dependencies = {
+            {
+                "nvim-telescope/telescope-fzf-native.nvim",
+                build = "make",
+                config = function()
+                    require("telescope").load_extension("fzf")
+                end,
+            },
+        },
+        version = false, -- telescope did only one release, so use HEAD for now
+        keys = {
+            { "<leader>,", "<cmd>Telescope buffers show_all_buffers=true<cr>", desc = "Switch Buffer" },
+            { "<leader>/", "<cmd>Telescope live_grep<cr>", desc = "Find in Files (Grep)" },
+            { "<leader>:", "<cmd>Telescope command_history<cr>", desc = "Command History" },
+            { "<leader><space>", "<cmd>Telescope files<cr>", desc = "Find Files (root dir)" },
+            -- find
+            { "<leader>fb", "<cmd>Telescope buffers<cr>", desc = "Buffers" },
+            { "<leader>ff", "<cmd>Telescope find_files<cr>", desc = "Find Files (root dir)" },
+            { "<leader>fr", "<cmd>Telescope oldfiles<cr>", desc = "Recent" },
+            -- git
+            { "<leader>gc", "<cmd>Telescope git_commits<cr>", desc = "Commits" },
+            { "<leader>gs", "<cmd>Telescope git_status<cr>", desc = "Status" },
+            { "<leader>gb", "<cmd>Telescope git_branches<cr>", desc = "Branches" },
+            -- search
+            { "<leader>sa", "<cmd>Telescope autocommands<cr>", desc = "Auto Commands" },
+            { "<leader>sb", "<cmd>Telescope current_buffer_fuzzy_find<cr>", desc = "Buffer" },
+            { "<leader>sc", "<cmd>Telescope command_history<cr>", desc = "Command History" },
+            { "<leader>sC", "<cmd>Telescope commands<cr>", desc = "Commands" },
+            { "<leader>sd", "<cmd>Telescope diagnostics<cr>", desc = "Diagnostics" },
+            { "<leader>sg", "<cmd>Telescope live_grep<cr>", desc = "Grep (root dir)" },
+            { "<leader>sh", "<cmd>Telescope help_tags<cr>", desc = "Help Pages" },
+            { "<leader>sH", "<cmd>Telescope highlights<cr>", desc = "Search Highlight Groups" },
+            { "<leader>sk", "<cmd>Telescope keymaps<cr>", desc = "Key Maps" },
+            { "<leader>sM", "<cmd>Telescope man_pages<cr>", desc = "Man Pages" },
+            { "<leader>sm", "<cmd>Telescope marks<cr>", desc = "Jump to Mark" },
+            { "<leader>so", "<cmd>Telescope vim_options<cr>", desc = "Options" },
+            { "<leader>sR", "<cmd>Telescope resume<cr>", desc = "Resume" },
+            { "<leader>sw", "<cmd>Telescope grep_string<cr>", desc = "Word (root dir)" },
+            -- ui
+            { "<leader>uC", "<cmd>Telescope colorscheme enable_preview=true<cr>", desc = "Colorscheme with preview" },
+        },
+        config = function()
+            require("telescope").setup {
+                defaults = {
+                    prompt_prefix = " ",
+                    selection_caret = " ",
+                    layout_strategy = "horizontal",
+                    layout_config = { prompt_position = "top" },
+                    sorting_strategy = "ascending",
+                    winblend = 0,
+                },
+            }
+        end,
+    },
+
+
+
+    -- Harpoon
+    {
+        "ThePrimeagen/harpoon",
+        event = "VeryLazy",
+        keys = {
+            { "<leader>ha", function() require("harpoon.mark").add_file() end, desc = "Add File" },
+            { "<leader>hf", function() require("harpoon.ui").toggle_quick_menu() end, desc = "File Menu" },
+            { "<leader>hc", function() require("harpoon.cmd-ui").toggle_quick_menu() end, desc = "Command Menu" },
+            { "<leader>h1", function() require("harpoon.ui").nav_file(1) end, desc = "File 1" },
+            { "<leader>h2", function() require("harpoon.ui").nav_file(2) end, desc = "File 2" },
+            { "<leader>h3", function() require("harpoon.ui").nav_file(2) end, desc = "File 3" },
+            { "<leader>h4", function() require("harpoon.ui").nav_file(2) end, desc = "File 4" },
+        },
+    },
+
+
+
+    -- TMux aware navigation of splits
+    {
+        "christoomey/vim-tmux-navigator",
+        lazy = true,
+        keys = {
+            { "<C-h>", desc = "Navigate Window Left" },
+            { "<C-j>", desc = "Navigate Window Bottom" },
+            { "<C-k>", desc = "Navigate Window Top" },
+            { "<C-l>", desc = "Navigate Window Right" },
+        }
+    },
+}
