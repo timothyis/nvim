@@ -26,6 +26,7 @@ return {
         }
     },
 
+
     -- Highlight References
     {
         "RRethy/vim-illuminate",
@@ -58,6 +59,7 @@ return {
         },
     },
 
+    -- Multi-cursor
     {
         "mg979/vim-visual-multi",
         keys = {
@@ -65,5 +67,11 @@ return {
             { "C-Down", desc = "Create multi-cursor below" },
             { "C-Up", desc = "Create multi-cursor above" },
         }
-    }
+    },
+
+    {
+        'windwp/nvim-autopairs',
+        event = "InsertEnter",
+        config = true
+    },
 }
