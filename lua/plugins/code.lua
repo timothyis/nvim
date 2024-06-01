@@ -15,10 +15,6 @@ return {
             require('Comment').setup({
                 pre_hook = require('ts_context_commentstring.integrations.comment_nvim').create_pre_hook(),
             })
-
-            local ft = require('Comment.ft')
-
-            ft.htmldjango = { "{# %s #}", "{% comment %} %s {% endcomment %}" }
         end,
         keys = {
             { "gc", mode = { "n", "v" }, desc = "Toggle Comment" },
@@ -31,7 +27,6 @@ return {
     {
         "RRethy/vim-illuminate",
         event = { "BufReadPost", "BufNewFile" },
-        opts = { delay = 200 },
         config = function(_, opts)
             require("illuminate").configure(opts)
 
@@ -59,6 +54,7 @@ return {
         },
     },
 
+
     -- Multi-cursor
     {
         "mg979/vim-visual-multi",
@@ -69,6 +65,8 @@ return {
         }
     },
 
+
+    -- Autopairs
     {
         'windwp/nvim-autopairs',
         event = "InsertEnter",
