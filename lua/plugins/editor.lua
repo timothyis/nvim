@@ -1,83 +1,88 @@
 return {
-    -- Detect tabstop and shiftwidth automatically
-    {
-        "tpope/vim-sleuth",
+  -- Detect tabstop and shiftwidth automatically
+  {
+    "tpope/vim-sleuth",
+  },
+
+
+  -- Quick code navigation
+  {
+    "stevearc/aerial.nvim",
+    opts = {
+      attach_mode = "global",
+      backends = { "lsp", "treesitter", "markdown", "man" },
+      layout = { min_width = 28 },
+      show_guides = true,
+      filter_kind = false,
+      guides = {
+        mid_item = "├ ",
+        last_item = "└ ",
+        nested_top = "│ ",
+        whitespace = "  ",
+      },
+      keymaps = {
+        ["[y"] = "actions.prev",
+        ["]y"] = "actions.next",
+        ["[Y"] = "actions.prev_up",
+        ["]Y"] = "actions.next_up",
+        ["{"] = false,
+        ["}"] = false,
+        ["[["] = false,
+        ["]]"] = false,
+      },
     },
-
-    -- git signs
-    {
-        "lewis6991/gitsigns.nvim",
-        event = { "BufReadPre", "BufNewFile" },
-        opts = {
-            signs = {
-                add = { text = "▎" },
-                change = { text = "▎" },
-                delete = { text = "" },
-                topdelete = { text = "" },
-                changedelete = { text = "▎" },
-                untracked = { text = "▎" },
-            },
-            on_attach = function(buffer)
-                local gs = package.loaded.gitsigns
-
-                local function map(mode, l, r, desc)
-                    vim.keymap.set(mode, l, r, { buffer = buffer, desc = desc })
-                end
-
-                -- stylua: ignore start
-                map("n", "]h", gs.next_hunk, "Next Hunk")
-                map("n", "[h", gs.prev_hunk, "Prev Hunk")
-                map({ "n", "v" }, "<leader>ghs", ":Gitsigns stage_hunk<CR>", "Stage Hunk")
-                map({ "n", "v" }, "<leader>ghr", ":Gitsigns reset_hunk<CR>", "Reset Hunk")
-                map("n", "<leader>ghS", gs.stage_buffer, "Stage Buffer")
-                map("n", "<leader>ghu", gs.undo_stage_hunk, "Undo Stage Hunk")
-                map("n", "<leader>ghR", gs.reset_buffer, "Reset Buffer")
-                map("n", "<leader>ghp", gs.preview_hunk, "Preview Hunk")
-                map("n", "<leader>ghb", function() gs.blame_line({ full = true }) end, "Blame Line")
-                map("n", "<leader>ghd", gs.diffthis, "Diff This")
-                map("n", "<leader>ghD", function() gs.diffthis("~") end, "Diff This ~")
-                map({ "o", "x" }, "ih", ":<C-U>Gitsigns select_hunk<CR>", "GitSigns Select Hunk")
-            end,
-        },
+    dependencies = {
+      "nvim-treesitter/nvim-treesitter",
+      "nvim-tree/nvim-web-devicons",
     },
+  },
 
-
-
-    -- File browser
-    -- Unless you are still migrating, remove the deprecated commands from v1.x
-
-    {
-        "stevearc/aerial.nvim",
-        opts = {
-            attach_mode = "global",
-            backends = { "lsp", "treesitter", "markdown", "man" },
-            layout = { min_width = 28 },
-            show_guides = true,
-            filter_kind = false,
-            guides = {
-                mid_item = "├ ",
-                last_item = "└ ",
-                nested_top = "│ ",
-                whitespace = "  ",
-            },
-            keymaps = {
-                ["[y"] = "actions.prev",
-                ["]y"] = "actions.next",
-                ["[Y"] = "actions.prev_up",
-                ["]Y"] = "actions.next_up",
-                ["{"] = false,
-                ["}"] = false,
-                ["[["] = false,
-                ["]]"] = false,
-            },
-        },
-        dependencies = {
-            "nvim-treesitter/nvim-treesitter",
-            "nvim-tree/nvim-web-devicons"
-        },
+  -- Code Actions and Diagnostics
+  {
+    "folke/trouble.nvim",
+    keys = {
+      {
+        "<leader>xx",
+        function()
+          require("trouble").toggle()
+        end,
+        desc = "Toggle Trouble",
+      },
+      {
+        "<leader>xw",
+        function()
+          require("trouble").toggle("workspace_diagnostics")
+        end,
+        desc = "Workspace Diagnostics",
+      },
+      {
+        "<leader>xd",
+        function()
+          require("trouble").toggle("document_diagnostics")
+        end,
+        desc = "Document Diagnostics",
+      },
+      {
+        "<leader>xq",
+        function()
+          require("trouble").toggle("quickfix")
+        end,
+        desc = "Trouble Quickfix",
+      },
+      {
+        "<leader>xl",
+        function()
+          require("trouble").toggle("loclist")
+        end,
+        desc = "Trouble LOC List",
+      },
+      {
+        "gR",
+        function()
+          require("trouble").toggle("lsp_references")
+        end,
+        desc = "Trouble LSP Ref",
+      },
     },
-
-    {
-        "folke/trouble.nvim"
-    },
+  },
 }
