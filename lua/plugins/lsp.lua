@@ -107,7 +107,20 @@ return {
         formatting = lsp_zero.cmp_format({details = true}),
       })
     end,
-
-
   },
+
+  -- TypeScript Better LSP
+  {
+    "pmizio/typescript-tools.nvim",
+    dependencies = {
+      "neovim/nvim-lspconfig"
+    },
+    keys = {
+      { "<leader>cf", "<cmd>TSToolsFixAll<CR>" },
+      { "<leader>ci", "<cmd>TSToolsAddMissingImports<CR>" },
+      { "<leader>co", "<cmd>TSToolsOrganizeImports<CR>" },
+      { "<leader>rf", "<cmd>TSToolsRenameFile<CR>" },
+    },
+    opts = {},
+  }
 }

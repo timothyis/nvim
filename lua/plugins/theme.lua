@@ -79,6 +79,7 @@ return {
                     enabled = true,
                     colored_indent_levels = false,
                 },
+                lsp_trouble = true,
                 native_lsp = {
                     enabled = true,
                     virtual_text = {
@@ -86,16 +87,22 @@ return {
                         hints = { "italic" },
                         warnings = { "italic" },
                         information = { "italic" },
+                        ok = { "italic" },
                     },
                     underlines = {
                         errors = { "underline" },
                         hints = { "underline" },
                         warnings = { "underline" },
                         information = { "underline" },
+                        ok = { "underline" },
+                    },
+                    inlay_hints = {
+                        background = true,
                     },
                 },
                 neotree = true,
                 notify = true,
+
             },
         },
         lazy = false,
