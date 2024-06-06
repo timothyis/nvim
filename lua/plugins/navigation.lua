@@ -3,7 +3,12 @@ return {
         "nvim-neo-tree/neo-tree.nvim",
         lazy = true,
         cmd = "Neotree",
-        branch = "v2.x",
+        branch = "v3.x",
+        dependencies = {
+            "nvim-lua/plenary.nvim",
+            "nvim-tree/nvim-web-devicons", -- not strictly required, but recommended
+            "MunifTanjim/nui.nvim",
+        },
         opts = {
             close_if_last_window = true, -- Close Neo-tree if it is the last window left in the tab
             popup_border_style = "rounded",
@@ -13,11 +18,13 @@ return {
                 winbar = true,
             },
             filesystem = {
-                follow_current_file = true,
+                follow_current_file = {
+                    enabled = true,
+                },
                 filtered_items = {
                     hide_dotfiles = false,
                     hide_by_name = {
-                        "node_modules"
+                        "node_modules",
                     },
                     never_show = {
                         ".DS_Store",
@@ -31,11 +38,10 @@ return {
         },
         keys = {
             { "<leader>e", ":Neotree filesystem reveal float toggle<CR>", silent = true },
-            { "<leader>vg", ":Neotree git reveal float toggle<CR>", silent = true },
+            { "<leader>vb", ":Neotree buffers reveal float toggle<CR>", silent = true },
+            { "<leader>vg", ":Neotree git_status reveal float toggle<CR>", silent = true },
         },
     },
-
-
 
     -- fuzzy finder
     {
@@ -83,7 +89,7 @@ return {
             { "<leader>uC", "<cmd>Telescope colorscheme enable_preview=true<cr>", desc = "Colorscheme with preview" },
         },
         config = function()
-            require("telescope").setup {
+            require("telescope").setup({
                 defaults = {
                     prompt_prefix = " ",
                     selection_caret = " ",
@@ -92,28 +98,66 @@ return {
                     sorting_strategy = "ascending",
                     winblend = 0,
                 },
-            }
+            })
         end,
     },
-
-
 
     -- Harpoon
     {
         "ThePrimeagen/harpoon",
         event = "VeryLazy",
         keys = {
-            { "<leader>ha", function() require("harpoon.mark").add_file() end, desc = "Add File" },
-            { "<leader>hf", function() require("harpoon.ui").toggle_quick_menu() end, desc = "File Menu" },
-            { "<leader>hc", function() require("harpoon.cmd-ui").toggle_quick_menu() end, desc = "Command Menu" },
-            { "<leader>h1", function() require("harpoon.ui").nav_file(1) end, desc = "File 1" },
-            { "<leader>h2", function() require("harpoon.ui").nav_file(2) end, desc = "File 2" },
-            { "<leader>h3", function() require("harpoon.ui").nav_file(2) end, desc = "File 3" },
-            { "<leader>h4", function() require("harpoon.ui").nav_file(2) end, desc = "File 4" },
+            {
+                "<leader>ha",
+                function()
+                    require("harpoon.mark").add_file()
+                end,
+                desc = "Add File",
+            },
+            {
+                "<leader>hf",
+                function()
+                    require("harpoon.ui").toggle_quick_menu()
+                end,
+                desc = "File Menu",
+            },
+            {
+                "<leader>hc",
+                function()
+                    require("harpoon.cmd-ui").toggle_quick_menu()
+                end,
+                desc = "Command Menu",
+            },
+            {
+                "<leader>h1",
+                function()
+                    require("harpoon.ui").nav_file(1)
+                end,
+                desc = "File 1",
+            },
+            {
+                "<leader>h2",
+                function()
+                    require("harpoon.ui").nav_file(2)
+                end,
+                desc = "File 2",
+            },
+            {
+                "<leader>h3",
+                function()
+                    require("harpoon.ui").nav_file(2)
+                end,
+                desc = "File 3",
+            },
+            {
+                "<leader>h4",
+                function()
+                    require("harpoon.ui").nav_file(2)
+                end,
+                desc = "File 4",
+            },
         },
     },
-
-
 
     -- TMux aware navigation of splits
     {
@@ -124,6 +168,6 @@ return {
             { "<C-j>", desc = "Navigate Window Bottom" },
             { "<C-k>", desc = "Navigate Window Top" },
             { "<C-l>", desc = "Navigate Window Right" },
-        }
+        },
     },
 }

@@ -131,12 +131,6 @@ return {
         opts = {},
     },
 
-    -- Copilot
-    {
-        "github/copilot.vim",
-        event = "InsertEnter",
-    },
-
     { -- Autoformat
         "stevearc/conform.nvim",
         lazy = false,
