@@ -61,7 +61,7 @@ return {
             { "<leader>,", "<cmd>Telescope buffers show_all_buffers=true<cr>", desc = "Switch Buffer" },
             { "<leader>/", "<cmd>Telescope live_grep<cr>", desc = "Find in Files (Grep)" },
             { "<leader>:", "<cmd>Telescope command_history<cr>", desc = "Command History" },
-            { "<leader><space>", "<cmd>Telescope files<cr>", desc = "Find Files (root dir)" },
+            { "<leader><space>", "<cmd>Telescope find_files<cr>", desc = "Find Files (root dir)" },
             -- find
             { "<leader>fb", "<cmd>Telescope buffers<cr>", desc = "Buffers" },
             { "<leader>ff", "<cmd>Telescope find_files<cr>", desc = "Find Files (root dir)" },
@@ -87,6 +87,16 @@ return {
             { "<leader>sw", "<cmd>Telescope grep_string<cr>", desc = "Word (root dir)" },
             -- ui
             { "<leader>uC", "<cmd>Telescope colorscheme enable_preview=true<cr>", desc = "Colorscheme with preview" },
+            -- LSP
+            { "gd", "<cmd>Telescope lsp_definitions<cr>", desc = "Go to Definitions" },
+            { "gi", "<cmd>Telescope lsp_implementations<cr>", desc = "Go to Implementations" },
+            { "gr", "<cmd>Telescope lsp_references<cr>", desc = "LSP References" },
+            { "gs", "<cmd>Telescope lsp_document_symbols<cr>", desc = "LSP Document Symbols" },
+            { "gS", "<cmd>Telescope lsp_workspace_symbols<cr>", desc = "LSP Workspace Symbols" },
+            { "gh", "<cmd>Telescope lsp_document_diagnostics<cr>", desc = "LSP Document Diagnostics" },
+            { "gH", "<cmd>Telescope lsp_workspace_diagnostics<cr>", desc = "LSP Workspace Diagnostics" },
+            { "gD", "<cmd>Telescope lsp_type_definitions<cr>", desc = "Go to Type Definitions" },
+            { "ca", "<cmd>Telescope lsp_code_actions<cr>", desc = "LSP Code Actions" },
         },
         config = function()
             require("telescope").setup({

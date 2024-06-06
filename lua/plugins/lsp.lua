@@ -50,6 +50,7 @@ return {
     -- Completion
     {
         "hrsh7th/nvim-cmp",
+        event = "InsertEnter",
         lazy = false,
         priority = 100,
         dependencies = {

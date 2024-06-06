@@ -2,7 +2,7 @@ return {
     -- which-key
     {
         "folke/which-key.nvim",
-        event = "VeryLazy",
+        event = "VimEnter",
         opts = {
             plugins = { spelling = true },
         },
