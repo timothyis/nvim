@@ -1,4 +1,3 @@
-
 -- Code plugins
 -- ------------
 -- These plugins augment the code experience in NeoVim,
@@ -9,19 +8,18 @@ return {
     {
         "numToStr/Comment.nvim",
         dependencies = {
-            'JoosepAlviste/nvim-ts-context-commentstring',
+            "JoosepAlviste/nvim-ts-context-commentstring",
         },
         config = function()
-            require('Comment').setup({
-                pre_hook = require('ts_context_commentstring.integrations.comment_nvim').create_pre_hook(),
+            require("Comment").setup({
+                pre_hook = require("ts_context_commentstring.integrations.comment_nvim").create_pre_hook(),
             })
         end,
         keys = {
             { "gc", mode = { "n", "v" }, desc = "Toggle Comment" },
-            { "gb", mode = { "n", "v" }, desc = "Toggle Comment (Blockwise)" }
-        }
+            { "gb", mode = { "n", "v" }, desc = "Toggle Comment (Blockwise)" },
+        },
     },
-
 
     -- Highlight References
     {
@@ -54,33 +52,54 @@ return {
         },
     },
 
-
     -- Multi-cursor
     {
         "mg979/vim-visual-multi",
-        keys = {
-            { "C-n", desc = "Create multi-cursor with next occurrence" },
-            { "C-Down", desc = "Create multi-cursor below" },
-            { "C-Up", desc = "Create multi-cursor above" },
-        }
+        event = "VeryLazy",
     },
-
 
     -- Autopairs
     {
-        'windwp/nvim-autopairs',
+        "windwp/nvim-autopairs",
         event = "InsertEnter",
-        config = true
+        config = true,
     },
 
-    -- Formatting
-    {
-        "stevearc/conform.nvim",
-        opts = {
-            formatters_by_ft = {
-                lua = { "stylua" },
-                javascript = { { "prettier" } },
-            },
-        },
+    { -- Collection of various small independent plugins/modules
+        "echasnovski/mini.nvim",
+        config = function()
+            -- Better Around/Inside textobjects
+            --
+            -- Examples:
+            --  - va)  - [V]isually select [A]round [)]paren
+            --  - yinq - [Y]ank [I]nside [N]ext [']quote
+            --  - ci'  - [C]hange [I]nside [']quote
+            require("mini.ai").setup({ n_lines = 500 })
+
+            -- Add/delete/replace surroundings (brackets, quotes, etc.)
+            --
+            -- - saiw) - [S]urround [A]dd [I]nner [W]ord [)]Paren
+            -- - sd'   - [S]urround [D]elete [']quotes
+            -- - sr)'  - [S]urround [R]eplace [)] [']
+            require("mini.surround").setup()
+
+            -- Simple and easy statusline.
+            --  You could remove this setup call if you don't like it,
+            --  and try some other statusline plugin
+            local statusline = require("mini.statusline")
+            -- set use_icons to true if you have a Nerd Font
+            statusline.setup({ use_icons = vim.g.have_nerd_font })
+
+            -- You can configure sections in the statusline by overriding their
+            -- default behavior. For example, here we set the section for
+            -- cursor location to LINE:COLUMN
+            ---@diagnostic disable-next-line: duplicate-set-field
+            statusline.section_location = function()
+                return "%2l:%-2v"
+            end
+
+            -- ... and there is more!
+            --  Check out: https://github.com/echasnovski/mini.nvim
+        end,
     },
 }
