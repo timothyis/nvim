@@ -108,65 +108,52 @@ return {
                     sorting_strategy = "ascending",
                     winblend = 0,
                 },
+                file_ignore_patterns = {
+                    ".git/",
+                    "node_modules/",
+                    "vendor/",
+                    "pnpm-lock.yaml",
+                },
             })
         end,
     },
 
-    -- Harpoon
     {
         "ThePrimeagen/harpoon",
-        event = "VeryLazy",
-        keys = {
-            {
-                "<leader>ha",
-                function()
-                    require("harpoon.mark").add_file()
-                end,
-                desc = "Add File",
-            },
-            {
-                "<leader>hf",
-                function()
-                    require("harpoon.ui").toggle_quick_menu()
-                end,
-                desc = "File Menu",
-            },
-            {
-                "<leader>hc",
-                function()
-                    require("harpoon.cmd-ui").toggle_quick_menu()
-                end,
-                desc = "Command Menu",
-            },
-            {
-                "<leader>h1",
-                function()
-                    require("harpoon.ui").nav_file(1)
-                end,
-                desc = "File 1",
-            },
-            {
-                "<leader>h2",
-                function()
-                    require("harpoon.ui").nav_file(2)
-                end,
-                desc = "File 2",
-            },
-            {
-                "<leader>h3",
-                function()
-                    require("harpoon.ui").nav_file(2)
-                end,
-                desc = "File 3",
-            },
-            {
-                "<leader>h4",
-                function()
-                    require("harpoon.ui").nav_file(2)
-                end,
-                desc = "File 4",
-            },
+        branch = "harpoon2",
+        event = { "BufReadPre", "BufNewFile" },
+        dependencies = {
+            "nvim-lua/plenary.nvim",
         },
+        keys = function()
+            local keys = {
+                {
+                    "<leader>ha",
+                    function()
+                        require("harpoon"):list():add()
+                    end,
+                    desc = "(h)arpoon (a)dd file",
+                },
+                {
+                    "<leader>hf",
+                    function()
+                        local harpoon = require("harpoon")
+                        harpoon.ui:toggle_quick_menu(harpoon:list())
+                    end,
+                },
+            }
+
+            for i = 1, 5 do
+                table.insert(keys, {
+                    "<leader>" .. i,
+                    function()
+                        require("harpoon"):list():select(i)
+                    end,
+                    desc = "Harpoon to File " .. i,
+                })
+            end
+            return keys
+        end,
     },
 
     -- TMux aware navigation of splits

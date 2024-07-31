@@ -24,6 +24,14 @@ require("lazy").setup("plugins", {
         colorscheme = { "catppuccin" },
     },
 
+    dev = {
+        path = "~/Projects",
+    },
+
+    change_detection = {
+        notify = false,
+    },
+
     ui = {
         icons = {
             ft = "",

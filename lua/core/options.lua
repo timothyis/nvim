@@ -1,17 +1,18 @@
 local opt = vim.opt
 local g = vim.g
 
+--
 -- Core
 -- ----
 
-opt.spelllang = { 'en_gb' }
+opt.spelllang = { "en_gb" }
 
 -- Set leader
 g.mapleader = " "
 g.maplocalleader = " "
 
 -- Set update time to a lower amount
-opt.updatetime = 250
+opt.updatetime = 100
 opt.timeout = true
 opt.timeoutlen = 300
 
@@ -24,32 +25,39 @@ opt.mouse = "a" -- Enable mouse mode
 -- Confirm saving changes when buffer is modified
 opt.confirm = true
 
--- Use ripgrep for grepping
-opt.grepprg = "rg --vimgrep"
-
--- Keep screenline when opening/closing/resizing horizontal splits
-opt.splitkeep = "screen"
-
--- Modify messages (no "written", no intro, no completion, no scanning)
-opt.shortmess:append { W = true, I = true, c = true, C = true }
+-- Modify messages
+opt.shortmess:append({
+    W = true, -- Don't print "written" when writing a file
+    I = true, -- No into on vim start
+    c = true, -- No insert completion messages
+    C = true, -- No insert scanning messages
+    a = true, -- Abbreviate messages
+    F = true, -- No file info when editing
+    s = true, -- Do not show "Search hit BOTTOM" message
+})
 
 -- Let lualine handle showing the mode
 opt.showmode = false
 
--- Split direction defautls
+-- Split direction defaults
 opt.splitbelow = true
 opt.splitright = true
 
+-- Keep screenline when opening/closing/resizing horizontal splits
+opt.splitkeep = "screen"
+
 -- Disable providers
-vim.g.loaded_perl_provider = 0
-vim.g.loaded_ruby_provider = 0
+g.loaded_perl_provider = 0
+g.loaded_ruby_provider = 0
 
 -- Disable menu
-vim.g.did_install_default_menus = 1
+g.did_install_default_menus = 1
 
+-- Modify how lines are traversed
+opt.whichwrap = opt.whichwrap + "h,l,<,>,[,]"
 
-
--- Visual
+--
+-- UI
 -- ------
 
 -- Show line numbers
@@ -61,8 +69,11 @@ opt.relativenumber = true
 -- All the colours
 opt.termguicolors = true
 
--- Allow scrolling below the last line
+-- Allow specified keys that move the cursor left/right to move to the
+-- previous/next line when the cursor is on the first/last character in
+-- the line.
 opt.scrolloff = 8
+opt.sidescrolloff = 3
 
 -- Column in linenumber sidebar for signs (e.g., git signs)
 opt.signcolumn = "yes"
@@ -72,10 +83,24 @@ opt.cursorline = true
 
 -- List some invisible characters
 opt.list = true
+opt.listchars = {
+    nbsp = "⦸", -- CIRCLED REVERSE SOLIDUS (U+29B8, UTF-8: E2 A6 B8)
+    tab = "  ",
+    extends = "»", -- RIGHT-POINTING DOUBLE ANGLE QUOTATION MARK (U+00BB, UTF-8: C2 BB)
+    precedes = "«", -- LEFT-POINTING DOUBLE ANGLE QUOTATION MARK (U+00AB, UTF-8: C2 AB)
+    trail = "·", -- Dot Operator (U+22C5)
+}
 
+opt.showbreak = "↳ " -- DOWNWARDS ARROW WITH TIP RIGHTWARDS (U+21B3, UTF-8: E2 86 B3)
+opt.fillchars = {
+    eob = " ", -- Suppress ~ at EndOfBuffer
+    fold = " ", -- Hide trailing folding characters
+    diff = "╱",
+    foldopen = "",
+    foldclose = "",
+}
 
-
-
+--
 -- Project
 -- -------
 
@@ -84,18 +109,18 @@ g.netrw_browse_split = 0
 g.netrw_banner = 0
 g.netrw_winsize = 25
 
+-- File extensions to ignore when opened with gf
+opt.suffixesadd = { ".md", ".js", ".ts", ".tsx" }
 
-
-
+--
 -- Code
 -- ----
 
--- Tab styles
+-- Indentation
 opt.tabstop = 4
 opt.softtabstop = 4
 opt.shiftwidth = 4
 opt.expandtab = true
-
 -- Nvim be smart about indenting
 opt.smartindent = true
 
@@ -109,15 +134,15 @@ g.markdown_recommended_style = 0
 -- Completion options
 -- Menuone: show when there's one match
 -- Noselect: Do not select a match by default
-opt.completeopt = "menuone,noselect"
+opt.completeopt = { "menuone", "noselect" }
 
 -- Don't stop backspace at insert
-opt.backspace:append { "nostop" }
+opt.backspace:append({ "nostop" })
 
 -- enable linematch diff algorithm
-opt.diffopt:append "linematch:60"
+opt.diffopt:append("linematch:60")
 
-opt.pumheight = 10
+opt.pumheight = 13
 
 opt.virtualedit = "block"
 
@@ -129,9 +154,16 @@ g.autopairs_enabled = true
 
 g.icons_enabled = true
 
+-- Folds
+opt.foldcolumn = "0"
+opt.foldlevel = 99
+opt.foldlevelstart = 99
+opt.foldenable = true
+opt.foldmethod = "expr"
+opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
+opt.foldtext = ""
 
-
-
+--
 -- Search
 -- ------
 
@@ -143,9 +175,21 @@ opt.smartcase = true
 opt.hlsearch = false
 opt.incsearch = true
 
+-- Use ripgrep for grepping
+opt.grepprg = "rg --ignore-case --vimgrep"
+opt.grepformat = "%f:%l:%c:%m,%f:%l:%m" -- https://neovim.io/doc/user/quickfix.html#errorformat
 
+-- Ignores
+opt.wildignore = {
+    "**/node_modules/**",
+    "**/coverage/**",
+    "**/.idea/**",
+    "**/.git/**",
+    "**/.vscode/**",
+    "**/pnpm-lock.yaml",
+}
 
-
+--
 -- History
 -- -------
 
@@ -154,4 +198,11 @@ opt.swapfile = false
 opt.backup = false
 opt.undodir = os.getenv("HOME") .. "/.vim/undodir"
 opt.undofile = true
+opt.undolevels = 1000
+opt.undoreload = 10000
+opt.shada = { "!", "'1000", "<50", "s10", "h" }
 
+-- Backup settings
+vim.opt.backup = true
+vim.opt.backupdir = os.getenv("HOME") .. "/.vim/backups"
+vim.opt.writebackup = true

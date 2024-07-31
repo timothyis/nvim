@@ -58,6 +58,8 @@ return {
         event = "VeryLazy",
     },
 
+    -- Autopairs
+    -- Repo: https://github.com/altermo/ultimate-autopair.nvim
     {
         "altermo/ultimate-autopair.nvim",
         event = { "InsertEnter", "CmdlineEnter" },
