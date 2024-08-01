@@ -1,6 +1,6 @@
 return {
     {
-        "MunifTanjim/nui.nvim"
+        "MunifTanjim/nui.nvim",
     },
 
     {
@@ -37,6 +37,17 @@ return {
                 long_message_to_split = true,
                 lsp_doc_border = true,
             },
+            routes = {
+                {
+                    filter = {
+                        event = "notify",
+                        find = "No information available",
+                    },
+                    opts = {
+                        skip = true,
+                    },
+                },
+            },
         },
         -- stylua: ignore
         keys = {
@@ -52,7 +63,7 @@ return {
     -- Icons
     {
         "nvim-tree/nvim-web-devicons",
-        lazy = true
+        lazy = true,
     },
 
     {
@@ -103,7 +114,6 @@ return {
                 },
                 neotree = true,
                 notify = true,
-
             },
         },
         lazy = false,
@@ -116,7 +126,7 @@ return {
         end,
     },
 
-     -- Add indentation guides even on blank lines
+    -- Add indentation guides even on blank lines
     {
         "lukas-reineke/indent-blankline.nvim",
         main = "ibl",
