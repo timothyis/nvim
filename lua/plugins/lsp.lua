@@ -10,6 +10,16 @@ return {
 
             -- LSP Config
             "neovim/nvim-lspconfig",
+
+            -- TypeScript Better LSP
+            {
+                "pmizio/typescript-tools.nvim",
+                dependencies = {
+                    "nvim-lua/plenary.nvim",
+                    "neovim/nvim-lspconfig",
+                },
+                opts = {},
+            },
         },
         config = function()
             local lsp_zero = require("lsp-zero")
@@ -31,9 +41,12 @@ return {
             require("mason-lspconfig").setup({
                 -- Replace the language servers listed here
                 -- with the ones you want to install
-                ensure_installed = { "tsserver", "rust_analyzer" },
+                ensure_installed = { "tailwindcss", "html", "cssls", "lua_ls", "jsonls" },
                 handlers = {
                     function(server_name)
+                        if server_name == "tsserver" then
+                            return
+                        end
                         require("lspconfig")[server_name].setup({})
                     end,
                     lua_ls = function()
@@ -46,14 +59,4 @@ return {
     },
 
     { "folke/neodev.nvim", opts = {} },
-
-    -- TypeScript Better LSP
-    {
-        "pmizio/typescript-tools.nvim",
-        dependencies = {
-            "nvim-lua/plenary.nvim",
-            "neovim/nvim-lspconfig",
-        },
-        opts = {},
-    },
 }
