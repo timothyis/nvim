@@ -56,7 +56,7 @@ return {
                 end,
             },
         },
-        version = false, -- telescope did only one release, so use HEAD for now
+        version = false,
         keys = {
             { "<leader>,", "<cmd>Telescope buffers show_all_buffers=true<cr>", desc = "Switch Buffer" },
             { "<leader>/", "<cmd>Telescope live_grep<cr>", desc = "Find in Files (Grep)" },
@@ -98,15 +98,21 @@ return {
             { "gD", "<cmd>Telescope lsp_type_definitions<cr>", desc = "Go to Type Definitions" },
             { "ca", "<cmd>Telescope lsp_code_actions<cr>", desc = "LSP Code Actions" },
         },
-        config = function()
-            require("telescope").setup({
+        opts = function()
+            return {
                 defaults = {
-                    prompt_prefix = " ",
+                    prompt_prefix = "   ",
                     selection_caret = " ",
                     layout_strategy = "horizontal",
-                    layout_config = { prompt_position = "top" },
+                    layout_config = {
+                        horizontal = {
+                            prompt_position = "top",
+                            preview_width = 0.55,
+                        },
+                        width = 0.87,
+                        height = 0.80,
+                    },
                     sorting_strategy = "ascending",
-                    winblend = 0,
                 },
                 file_ignore_patterns = {
                     ".git/",
@@ -114,7 +120,7 @@ return {
                     "vendor/",
                     "pnpm-lock.yaml",
                 },
-            })
+            }
         end,
     },
 

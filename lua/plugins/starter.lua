@@ -38,6 +38,7 @@ _____/  /_/  /_/ /_/ /_/\____/\__/ /_/ /_/_\__, /
                     starter.gen_hook.aligning("center", "center"),
                 },
             }
+            --stylua: enable
             return config
         end,
         config = function(_, config)
@@ -61,7 +62,12 @@ _____/  /_/  /_/ /_/ /_/\____/\__/ /_/ /_/_\__, /
                     local stats = require("lazy").stats()
                     local ms = (math.floor(stats.startuptime * 100 + 0.5) / 100)
                     local pad_footer = string.rep(" ", 1)
-                    starter.config.footer = pad_footer .. "⚡ Neovim loaded " .. stats.count .. " plugins in " .. ms .. "ms"
+                    starter.config.footer = pad_footer
+                        .. "⚡ Neovim loaded "
+                        .. stats.count
+                        .. " plugins in "
+                        .. ms
+                        .. "ms"
                     pcall(starter.refresh)
                 end,
             })
