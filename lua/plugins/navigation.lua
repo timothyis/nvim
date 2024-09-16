@@ -91,7 +91,6 @@ return {
             { "gd", "<cmd>Telescope lsp_definitions<cr>", desc = "Go to Definitions" },
             { "gi", "<cmd>Telescope lsp_implementations<cr>", desc = "Go to Implementations" },
             { "gr", "<cmd>Telescope lsp_references<cr>", desc = "LSP References" },
-            { "gs", "<cmd>Telescope lsp_document_symbols<cr>", desc = "LSP Document Symbols" },
             { "gS", "<cmd>Telescope lsp_workspace_symbols<cr>", desc = "LSP Workspace Symbols" },
             { "gh", "<cmd>Telescope lsp_document_diagnostics<cr>", desc = "LSP Document Diagnostics" },
             { "gH", "<cmd>Telescope lsp_workspace_diagnostics<cr>", desc = "LSP Workspace Diagnostics" },
