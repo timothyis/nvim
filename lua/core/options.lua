@@ -27,16 +27,16 @@ opt.confirm = true
 
 -- Modify messages
 opt.shortmess:append({
-    W = true, -- Don't print "written" when writing a file
-    I = true, -- No into on vim start
-    c = true, -- No insert completion messages
-    C = true, -- No insert scanning messages
-    a = true, -- Abbreviate messages
-    F = true, -- No file info when editing
-    s = true, -- Do not show "Search hit BOTTOM" message
+	W = true, -- Don't print "written" when writing a file
+	I = true, -- No into on vim start
+	c = true, -- No insert completion messages
+	C = true, -- No insert scanning messages
+	a = true, -- Abbreviate messages
+	F = true, -- No file info when editing
+	s = true, -- Do not show "Search hit BOTTOM" message
 })
 
--- Let lualine handle showing the mode
+-- Let the statusline handle showing the mode
 opt.showmode = false
 
 -- Split direction defaults
@@ -56,6 +56,9 @@ g.did_install_default_menus = 1
 -- Modify how lines are traversed
 opt.whichwrap = opt.whichwrap + "h,l,<,>,[,]"
 
+-- Preview substitutions
+opt.inccommand = "split"
+
 --
 -- UI
 -- ------
@@ -72,11 +75,15 @@ opt.termguicolors = true
 -- Allow specified keys that move the cursor left/right to move to the
 -- previous/next line when the cursor is on the first/last character in
 -- the line.
-opt.scrolloff = 8
+opt.scrolloff = 10
 opt.sidescrolloff = 3
 
 -- Column in linenumber sidebar for signs (e.g., git signs)
 opt.signcolumn = "yes"
+
+-- Statuscolumn
+opt.numberwidth = 3
+-- vim.opt.statuscolumn = "%=%{v:virtnum < 1 ? (v:relnum ? v:relnum : v:lnum < 10 ? v:lnum . '  ' : v:lnum) : ''}%=%s"
 
 -- Line for cursor in insert mode
 opt.cursorline = true
@@ -84,20 +91,24 @@ opt.cursorline = true
 -- List some invisible characters
 opt.list = true
 opt.listchars = {
-    nbsp = "⦸", -- CIRCLED REVERSE SOLIDUS (U+29B8, UTF-8: E2 A6 B8)
-    tab = "  ",
-    extends = "»", -- RIGHT-POINTING DOUBLE ANGLE QUOTATION MARK (U+00BB, UTF-8: C2 BB)
-    precedes = "«", -- LEFT-POINTING DOUBLE ANGLE QUOTATION MARK (U+00AB, UTF-8: C2 AB)
-    trail = "·", -- Dot Operator (U+22C5)
+	nbsp = "⦸", -- CIRCLED REVERSE SOLIDUS (U+29B8, UTF-8: E2 A6 B8)
+	tab = "  ",
+	extends = "»", -- RIGHT-POINTING DOUBLE ANGLE QUOTATION MARK (U+00BB, UTF-8: C2 BB)
+	precedes = "«", -- LEFT-POINTING DOUBLE ANGLE QUOTATION MARK (U+00AB, UTF-8: C2 AB)
+	trail = "·", -- Dot Operator (U+22C5)
+	-- space = '·',
+	-- tab = '  ↦'
 }
 
 opt.showbreak = "↳ " -- DOWNWARDS ARROW WITH TIP RIGHTWARDS (U+21B3, UTF-8: E2 86 B3)
 opt.fillchars = {
-    eob = " ", -- Suppress ~ at EndOfBuffer
-    fold = " ", -- Hide trailing folding characters
-    diff = "╱",
-    foldopen = "",
-    foldclose = "",
+	eob = " ", -- Suppress ~ at EndOfBuffer
+	fold = " ", -- Hide trailing folding characters
+	diff = "╱",
+	foldopen = "",
+	foldclose = "",
+	foldsep = ' ',
+	msgsep = '─',
 }
 
 --
@@ -117,9 +128,9 @@ opt.suffixesadd = { ".md", ".js", ".ts", ".tsx" }
 -- ----
 
 -- Indentation
-opt.tabstop = 4
-opt.softtabstop = 4
-opt.shiftwidth = 4
+opt.tabstop = 2
+opt.softtabstop = 2
+opt.shiftwidth = 2
 opt.expandtab = true
 -- Nvim be smart about indenting
 opt.smartindent = true
@@ -155,7 +166,7 @@ g.autopairs_enabled = true
 g.icons_enabled = true
 
 -- Folds
-opt.foldcolumn = "0"
+opt.foldcolumn = "1"
 opt.foldlevel = 99
 opt.foldlevelstart = 99
 opt.foldenable = true
@@ -181,12 +192,13 @@ opt.grepformat = "%f:%l:%c:%m,%f:%l:%m" -- https://neovim.io/doc/user/quickfix.h
 
 -- Ignores
 opt.wildignore = {
-    "**/node_modules/**",
-    "**/coverage/**",
-    "**/.idea/**",
-    "**/.git/**",
-    "**/.vscode/**",
-    "**/pnpm-lock.yaml",
+	".DS_Store",
+	"**/node_modules/**",
+	"**/coverage/**",
+	"**/.idea/**",
+	"**/.git/**",
+	"**/.vscode/**",
+	"**/pnpm-lock.yaml",
 }
 
 --
